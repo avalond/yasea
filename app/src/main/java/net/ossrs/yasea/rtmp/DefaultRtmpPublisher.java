@@ -1,9 +1,8 @@
-package net.ossrs.yasea;
+package net.ossrs.yasea.rtmp;
 
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import net.ossrs.yasea.rtmp.RtmpPublisher;
 import net.ossrs.yasea.rtmp.io.RtmpConnection;
 
 /**
@@ -11,17 +10,17 @@ import net.ossrs.yasea.rtmp.io.RtmpConnection;
  * 
  * @author francois, leoma
  */
-public class SrsRtmpPublisher implements RtmpPublisher {
+public class DefaultRtmpPublisher implements RtmpPublisher {
 
     private RtmpConnection rtmpConnection;
 
-    public SrsRtmpPublisher(RtmpPublisher.EventHandler handler) {
+    public DefaultRtmpPublisher(RtmpPublisher.EventHandler handler) {
         rtmpConnection = new RtmpConnection(handler);
     }
 
     @Override
-    public void connect(String url) throws IOException {
-        rtmpConnection.connect(url);
+    public boolean connect(String url) throws IOException {
+        return rtmpConnection.connect(url);
     }
 
     @Override
@@ -30,11 +29,11 @@ public class SrsRtmpPublisher implements RtmpPublisher {
     }
 
     @Override
-    public void publish(String publishType) throws IllegalStateException, IOException {
+    public boolean publish(String publishType) throws IllegalStateException, IOException {
         if (publishType == null) {
             throw new IllegalStateException("No publish type specified");
         }
-        rtmpConnection.publish(publishType);
+        return rtmpConnection.publish(publishType);
     }
 
     @Override

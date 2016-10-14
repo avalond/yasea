@@ -50,6 +50,7 @@ public class SrsCameraView extends SurfaceView implements SurfaceHolder.Callback
 
     public void setPreviewCallback(PreviewCallback cb) {
         mPrevCb = cb;
+        getHolder().addCallback(this);
     }
 
     public void setPreviewResolution(int width, int height) {
@@ -116,7 +117,7 @@ public class SrsCameraView extends SurfaceView implements SurfaceHolder.Callback
         return true;
     }
 
-    private static int[] findClosestFpsRange(int expectedFps, List<int[]> fpsRanges) {
+    private int[] findClosestFpsRange(int expectedFps, List<int[]> fpsRanges) {
         expectedFps *= 1000;
         int[] closestRange = fpsRanges.get(0);
         int measure = Math.abs(closestRange[0] - expectedFps) + Math.abs(closestRange[1] - expectedFps);
